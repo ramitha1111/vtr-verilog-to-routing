@@ -41,6 +41,7 @@ jobs:
   BuildVTR:
     name: 'B: Building VTR Release'
     runs-on: ubuntu-24.04
+    timeout-minutes: 45
     steps:
     - uses: actions/checkout@v7
       with:
@@ -86,6 +87,7 @@ jobs:
   BuildVTRWithOdin:
     name: 'B: Building VTR Release With Odin'
     runs-on: ubuntu-24.04
+    timeout-minutes: 45
     steps:
     - uses: actions/checkout@v7
       with:
@@ -133,6 +135,7 @@ jobs:
 
   Format:
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -189,6 +192,7 @@ jobs:
 
   VerifyTestSuites:
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     name: 'Verify Test Suites'
     steps:
 
@@ -209,6 +213,7 @@ jobs:
   UnitTests:
     name: 'U: C++ Unit Tests'
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     needs: [BuildVTR]
     steps:
 
@@ -246,6 +251,7 @@ jobs:
   GUITests:
     name: 'T: GUI Tests (Layers 1+3+4+5)'
     runs-on: ubuntu-24.04
+    timeout-minutes: 60
     steps:
 
     - uses: actions/checkout@v7
@@ -344,6 +350,7 @@ jobs:
     name: 'T: GUI Coverage (Linux, gcovr regression gate)'
     if: false
     runs-on: ubuntu-24.04
+    timeout-minutes: 120
     needs: [GUITests]
     steps:
 
@@ -448,6 +455,7 @@ jobs:
   # that these build variations are warning clean.
   BuildVariations:
     runs-on: ubuntu-24.04
+    timeout-minutes: 180
     name: 'B: Build Variations'
     env:
       # For the CI, we want all build variations to be warning clean.
@@ -566,6 +574,7 @@ jobs:
 
   Regression:
     runs-on: ubuntu-24.04
+    timeout-minutes: 45
     needs: [BuildVTR]
     strategy:
       fail-fast: false
@@ -670,6 +679,7 @@ jobs:
 
   RegressionWithOdin:
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     needs: [BuildVTRWithOdin]
     strategy:
       fail-fast: false
@@ -758,6 +768,7 @@ jobs:
 
   RegressionWithMosaic:
     runs-on: ubuntu-24.04
+    timeout-minutes: 90
     needs: [BuildVTR]
     strategy:
       fail-fast: false
@@ -849,6 +860,7 @@ jobs:
 
   Sanitized:
     runs-on: ubuntu-24.04
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
@@ -910,6 +922,7 @@ jobs:
   Parmys:
     name: 'Parmys Basic Test'
     runs-on: ubuntu-24.04
+    timeout-minutes: 45
     needs: [BuildVTR]
     steps:
 
@@ -950,6 +963,7 @@ jobs:
   ODINII:
     name: 'ODIN-II Basic Test'
     runs-on: ubuntu-24.04
+    timeout-minutes: 30
     needs: [BuildVTRWithOdin]
     steps:
 
@@ -991,6 +1005,7 @@ jobs:
   VQM2BLIF:
     name: 'VQM2BLIF Basic Tests'
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     needs: [BuildVTR]
     steps:
 
@@ -1024,6 +1039,7 @@ jobs:
 
   Compatibility:
     runs-on: ubuntu-24.04
+    timeout-minutes: 45
     needs: [BuildVTR]
     strategy:
       fail-fast: false
@@ -1068,6 +1084,7 @@ jobs:
   JammyCompatibility:
     name: 'Ubuntu Jammy - 22.04 Compatibility Test'
     runs-on: ubuntu-22.04
+    timeout-minutes: 45
     needs: [BuildVTR]
     env:
       CC: gcc-11
@@ -1099,6 +1116,7 @@ jobs:
   ResoluteCompatibility:
     name: 'Ubuntu Resolute - 26.04 Compatibility Test'
     runs-on: ubuntu-26.04
+    timeout-minutes: 45
     needs: [BuildVTR]
     env:
       CC: gcc-15
@@ -1130,6 +1148,7 @@ jobs:
   MacosCompatibility:
     name: 'MacOS 26 - Compatibility Test'
     runs-on: macos-26
+    timeout-minutes: 45
     needs: [BuildVTR]
     # Define the steps to run the build job
     env:
